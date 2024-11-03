@@ -1,0 +1,17 @@
+start
+	Declarations
+		modelName
+		num heightInches
+		num widthInches
+		num depthInches
+		cubicInches
+		CUBIC_INCHES_PER_CUBIC_FOOT = 1728
+	input modelName	
+	input heightInches
+	input widthInches
+	input depthInches
+	cubicInches = heightInches * widthInches * depthInches
+	cubicFeet = cubicInches / CUBIC_INCHES_PER_CUBIC_FOOT
+	output "Refrigerator Model: " + modelName
+	output "Cubic feet capacity: " + cubicFeet
+end
