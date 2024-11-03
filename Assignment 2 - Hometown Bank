@@ -1,0 +1,17 @@
+start
+	Declarations
+		accountBalance = 0
+		overDrawnFee
+		timesOverdrawn
+		fee
+		newAccountBalance
+	input accountBalance
+	input timesOverdrawn
+	overDrawnFee = 0.01 * accountBalance
+	fee = overDrawnFee - (timesOverdrawn * 5)
+	newAccountBalance = accountBalance - fee
+	output "Fee Calculation: $" + fee
+	output "New account balance: $" + newAccountBalance
+	output "Thanks for using this program"
+
+end
