@@ -1,0 +1,27 @@
+start
+	Declarations
+     		targetWord = "logic"
+     		dictionary = a sorted list of words (e.g., ["apple", "banana", "cherry", ..., "zebra"])
+     		low_index = 0
+    		high_index = length(dictionary) - 1
+    		found = false
+
+    while low_index <= high_index AND found == false
+         middle_index = (low_index + high_index) / 2
+         middle_word = dictionary[middle_index]
+
+        if middle_word == target_word
+            print "Word found: " + middle_word
+            set found = true
+        else if middle_word < target_word
+            print "The word " + target_word + " is after " + middle_word + ". Flipping forward."
+            SET low_index = middle_index + 1
+        else
+            print "The word " + target_word + " is before " + middle_word + ". Flipping back."
+            set high_index = middle_index - 1
+        end if
+    end while
+
+    if found == false
+        print "Word not found in the dictionary."
+end
