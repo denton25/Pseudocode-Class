@@ -1,0 +1,91 @@
+start
+    Declarations
+        num baseFee = 5.00
+        num taxRate = 0.14
+        num rate_100_300 = 0.03
+        num rate_300_plus = 0.02
+        num areaCode
+        num phoneNumber
+        num totalMessages
+        num totalBill
+        num bill
+        num targetAreaCode
+        num sentinel = -1
+        string displayMode
+        string customers
+
+    output "Choose your display mode!:"
+    output "1: Display all details."
+    output "2: Display details for customers with over 100 messages."
+    output "3: Display details for customers with total bill over $10."
+    output "4: Display details for a specific area code."
+    input displayMode
+
+    while True do
+        output "Enter area code (or -1 to stop)"
+        input num areaCode
+        if areaCode == sentinel then
+            break
+        endif
+
+        output "Enter phone number:"
+        input num phoneNumber
+
+        output "Enter total messages sent:"
+        input num totalMessages
+
+    if totalMessages <= 100 then
+        bill = baseFee
+    else if totalMessages <= 300 then
+        bill = baseFee + (totalMessages - 100) * rate_100_300
+    else
+        bill = baseFee + 200 * rate_100_300 + (totalMessages - 300) * rate_300_plus
+    endif
+
+    totalBill = bill + (bill * taxRate)
+endwhile
+
+    if displayMode == "1" then
+        for each customer in customers do
+            output "Area Code: ", customer.areaCode
+            output "Phone Number: ", customer.phoneNumber
+            output "Total Messages: ", customer.totalMessages
+            output "Bill Before Taxes: $", customer.bill
+            output "Total Bill (Including Taxes): $", customer.totalBill
+        endfor
+    else if displayMode == "2" then
+        for each customer in customers do
+            if customer.totalMessages > 100 then
+                output "Area Code: ", customer.areaCode
+                output "Phone Number: ", customer.phoneNumber
+                output "Total Messages: ", customer.totalMessages
+                output "Bill Before Taxes: $", customer.bill
+                output "Total Bill (Including Taxes): $", customer.totalBill
+            endif
+        endfor
+    else if displayMode == "3" then
+        for each customer in customers do
+            if customer.totalBill > 10 then
+                output "Area Code: ", customer.areaCode
+                output "Phone Number: ", customer.phoneNumber
+                output "Total Messages: ", customer.totalMessages
+                output "Bill Before Taxes: $", customer.bill
+                output "Total Bill (Including Taxes): $", customer.totalBill
+            endif
+        endfor
+    else if displayMode == "4" then
+        output "Enter target area code:"
+        input targetAreaCode
+
+        for each customer in customers do
+            if customer.areaCode == targetAreaCode then
+                output "Area Code: ", customer.areaCode
+                output "Phone Number: ", customer.phoneNumber
+                output "Total Messages: ", customer.totalMessages
+                output "Bill Before Taxes: $", customer.bill
+                output "Total Bill (Including Taxes): $", customer.totalBill
+            endif
+        endfor
+    endif
+
+end
