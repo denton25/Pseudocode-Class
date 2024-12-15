@@ -1,0 +1,65 @@
+start
+   Declarations
+      string roomAName
+      num roomAValue
+      string roomBName
+      num roomBValue
+      string bothFilesDone = "N"
+      num HIGH_VALUE = 999999
+      InputFile roomAFile
+      InputFile roomBFile
+      OutputFile mergedFile
+   getReady()
+   while bothFilesDone = "N"
+      detailLoop()
+   endwhile
+   allDone()
+stop
+
+getReady()  
+   open roomAFile "roomAFile.dat"
+   open roomBFile "roomBFile.dat"
+   open mergedFile "mergedFile.dat"
+   readA()
+   readB()
+   checkBoth()
+return
+
+readA()
+   if not eof(roomAFile) then
+      input roomAName, roomAValue from roomAFile
+   else
+      roomAValue = HIGH_VALUE
+   endif
+return
+
+readB()
+   if not eof(roomBFile) then
+      input roomBName, roomBValue from roomBFile
+   else
+      roomBValue = HIGH_VALUE
+   endif
+return
+
+checkBoth()
+   if roomAValue = HIGH_VALUE AND roomBValue = HIGH_VALUE then
+      bothFilesDone = "Y"
+   endif
+return
+
+detailLoop()
+   if roomAValue > roomBValue then
+      output roomAName, roomAValue to mergedFile
+      readA()
+   else
+      output roomBName, roomBValue to mergedFile
+      readB()
+   endif
+   checkBoth()  // Ensure both files' EOF status is checked each iteration
+return
+
+allDone()
+   close roomAFile
+   close roomBFile
+   close mergedFile
+return

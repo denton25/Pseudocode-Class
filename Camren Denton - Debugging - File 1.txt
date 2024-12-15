@@ -1,0 +1,65 @@
+start
+   Declarations
+      string newSalesperson
+      num newAmount
+      string usedSalesperson
+      num usedAmount
+      string bothAtEof = "N"
+      string HIGH_NAME = "ZZZZZ"
+      InputFile newSales
+      InputFile usedSales
+      OutputFile allSales
+   getReady()
+   while bothAtEof = "N"  // Change condition to "N", not "Y"
+      detailLoop()
+   endwhile
+   finish()
+stop 
+
+getReady()
+   open newSales "NewSales.dat"
+   open usedSales "UsedSales.dat"
+   open allSales "AllSales.dat"
+
+   input newSalesperson, newAmount from newSales
+   if eof(newSales) then
+      newSalesperson = HIGH_NAME  // If NewSales is at EOF, set HIGH_NAME
+   endif
+
+   input usedSalesperson, usedAmount from usedSales
+   if eof(usedSales) then
+      usedSalesperson = HIGH_NAME  // If UsedSales is at EOF, set HIGH_NAME
+   endif
+
+   if newSalesperson = HIGH_NAME AND usedSalesperson = HIGH_NAME then
+      bothAtEof = "Y"  // If both files are at EOF, set flag to "Y"
+   endif
+return
+
+detailLoop()
+   // Check if new salesperson's ID is greater than used salesperson's ID
+   if newSalesperson > usedSalesperson then
+      output usedSalesperson, usedAmount to allSales
+      input usedSalesperson, usedAmount from usedSales
+      if eof(usedSales) then
+         usedSalesperson = HIGH_NAME
+      endif
+   else
+      output newSalesperson, newAmount to allSales
+      input newSalesperson, newAmount from newSales
+      if eof(newSales) then
+         newSalesperson = HIGH_NAME
+      endif
+   endif
+
+   // Check if both files have reached EOF
+   if newSalesperson = HIGH_NAME AND usedSalesperson = HIGH_NAME then
+      bothAtEof = "Y"
+   endif
+return
+
+finish()
+   close newSales
+   close usedSales
+   close allSales
+return

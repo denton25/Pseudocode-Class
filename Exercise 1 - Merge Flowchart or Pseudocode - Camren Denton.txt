@@ -1,0 +1,48 @@
+start
+    Declarations
+        InputFile geraldine_file
+        InputFile gerard_file
+        OutputFile merged_file
+        string geraldine_record
+        string gerard_record
+        merged_list[]
+        set customer_numbers
+
+    open geraldine_file "geraldine_file.dat"
+    open gerard_file "gerard_file.dat"
+
+    open merged_file "merged_file.dat"
+
+    customer_numbers = {}
+    merged_list = []
+
+    while not eof(geraldine_file)
+        input geraldine_record from geraldine_file
+        input customer_number, last_name, address, property_size from geraldine_record
+        
+        if customer_number not in customer_numbers then
+            add customer_number to customer_numbers
+            add geraldine_record to merged_list
+        end if
+    end while
+
+    while not eof(gerard_file)
+        input gerard_record from gerard_file
+        input customer_number, last_name, address, property_size from gerard_record
+        
+        if customer_number not in customer_numbers then
+            add customer_number to customer_numbers
+            add gerard_record to merged_list
+        end if
+    end while
+
+    for each record in merged_list
+        output record to merged_file
+    end for
+
+    close geraldine_file
+    close gerard_file
+    close merged_file
+
+stop
+
